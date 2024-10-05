@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SunShop.Models.Category>
+
+@{
+    ViewBag.Title = "Catogory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <p class="mb-4">
+        <a href="/Admin/CreateCatogory" class="btn-create">
+            Thêm danh mục
+        </a>
+    </p>
+
+    <table class="table table-light">
+        <tr>
+            <th>
+                Tên danh mục
+            </th>
+            <th>
+                Ngày tạo
+            </th>
+            <th>
+                Ngày cập nhật
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.UpdatedAt)
+                </td>
+                <td class="align-middle">
+                    <div class="d-flex gap-1">
+                        <a href="/Admin/EditCategory/@item.Id" class="btn btn-mana-edit">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </a>
+                        <a href="/Admin/DeleteCategory/@item.Id" class="btn btn-mana-delete">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

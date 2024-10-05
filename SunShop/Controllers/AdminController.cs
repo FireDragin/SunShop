@@ -16,11 +16,21 @@ namespace SunShop.Controllers
         private readonly SunShopDataContext context = DatabaseHelper.GetDataContext();
         public ActionResult Index()
         {
-            List<Product>products=context.Products.ToList();
+            ViewBag.DashboardSelected = true;
+            return View();
+        }
+
+        public ActionResult ManageProducts()
+        {
+            ViewBag.ProductSelected = true;
+            List<Product> products = context.Products.ToList();
             return View(products);
         }
+
         public ActionResult Create()
         {
+            ViewBag.ProductSelected = true;
+
             if (Request.Form.Count > 0)
             {
 
@@ -42,7 +52,7 @@ namespace SunShop.Controllers
                 }
                 context.Products.InsertOnSubmit(p);
                 context.SubmitChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ManageProducts", "Admin");
             }
 
             List<Category> categories = context.Categories.ToList();
@@ -90,12 +100,13 @@ namespace SunShop.Controllers
             return RedirectToAction("Index");
 
         }
-        public ActionResult Catogory()
+        public ActionResult ManageCategories()
         {
+            ViewBag.CategorySelected = true;
             List<Category> category = context.Categories.ToList();
             return View(category);
         }
-        public ActionResult CreateCatogory()
+        public ActionResult CreateCategory()
         {
             if (Request.Form.Count > 0)
             {
@@ -112,7 +123,7 @@ namespace SunShop.Controllers
             return View();
 
         }
-        public ActionResult EditCatogory(int id)
+        public ActionResult EditCategory(int id)
         {
             Category c = context.Categories.FirstOrDefault(x => x.Id == id);
             if (Request.Form.Count == 0)
@@ -126,7 +137,7 @@ namespace SunShop.Controllers
             context.SubmitChanges();
             return RedirectToAction("Index");
         }
-        public ActionResult DeleteCatogory(int id)
+        public ActionResult DeleteCategory(int id)
         {
             Category c = context.Categories.FirstOrDefault(x => x.Id == id);
             if (c != null)

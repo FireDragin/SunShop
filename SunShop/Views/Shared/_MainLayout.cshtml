@@ -33,7 +33,7 @@
                        
                         <form method="get" action="/Home/Search">
                             <div class="box-search">
-                                <input name="key_search" type="text" class="input-search" />
+                                <input name="key_search" type="text" class="input-search" placeholder="Tìm kiếm" />
                                 <button class="btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </form>
@@ -89,13 +89,7 @@
                                 <ul class="sub-menu-user flex-column list-unstyled">
                                     <li>
                                         <a href="#">Thông tin</a>
-                                    </li>
-                                    <li>
-                                        <a href=@Url.Action("Index","Admin")>Quản lý sản phẩm</a>
-                                    </li>
-                                    <li>
-                                        <a href=@Url.Action("Catogory","Admin")>Quản lý loại sản phẩm</a>
-                                    </li>
+                                    </li>                                   
                                     <li>
                                         <a href=@Url.Action("Logout", "Auth")>Đăng xuất</a>
                                     </li>

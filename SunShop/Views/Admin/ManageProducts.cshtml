@@ -1,0 +1,83 @@
+﻿@model IEnumerable<SunShop.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <p class="mb-4">
+        <a href="/Admin/Create" class="btn-create">
+            Thêm sản phẩm
+        </a>
+    </p>
+
+    <div class="overflow-auto">
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Tên sản phẩm
+                    </th>
+                    <th scope="col">
+                        Mô tả
+                    </th>
+                    <th scope="col">
+                        Giá
+                    </th>
+                    <th scope="col">
+                        Ảnh
+                    </th>
+                    <th scope="col">
+                        Loại sản phẩm
+                    </th>
+                    <th scope="col">
+                        Hàng tồn kho
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td class="align-middle">
+                            <img src="~/Images/@Url.Content(item.ImgUrl)"
+                                 alt="Image"
+                                 width="50"
+                                 height="50" />
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Category.Name)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.QuantityStock)
+                        </td>
+                        <td class="align-middle">
+                            <div class="d-flex gap-1">
+                                <a href="/Admin/Edit/@item.Id" class="btn btn-mana-edit">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a href="/Admin/Delete/@item.Id" class="btn btn-mana-delete">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

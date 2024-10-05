@@ -4,7 +4,7 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container">
@@ -14,12 +14,11 @@
     }))
     {
         @Html.AntiForgeryToken()
-        <div class="form-horizontal">
+        <div class="form-horizontal bg-white rounded-3 p-4">
 
             <form>
-                <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <div class="col-md-10">
                         <p>
                             Tên sản phẩm
@@ -29,32 +28,32 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    Mô tả
+                <div class="form-group mb-3">
+                    <p>Mô tả</p>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    Giá
+                <div class="form-group mb-3">
+                    <p>Giá</p>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    Ảnh minh họa
+                <div class="form-group mb-3">
+                    <p>Ảnh</p>
                     <div class="col-md-10">
                         <input title="Upload a product image" type="file" name="Picture" />
                         @Html.ValidationMessageFor(model => model.ImgUrl, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    Loại sản phẩm
+                <div class="form-group mb-3">
+                    <p>Loại sản phẩm</p>
                     <div class="col-md-10">
                         @Html.DropDownListFor(model => model.CategoriesId, new SelectList(ViewBag.Categories, "Id", "Name"), "Chọn loại sản phẩm", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.CategoriesId, "", new { @class = "text-danger" })
@@ -62,8 +61,8 @@
                 </div>
 
 
-                <div class="form-group">
-                    Hàng tồn kho
+                <div class="form-group mb-3">
+                    <p>Số lượng tồn khoa</p>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.QuantityStock, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.QuantityStock, "", new { @class = "text-danger" })
@@ -80,10 +79,6 @@
             </div>
         </div>
     }
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-
 </div>
 
 
