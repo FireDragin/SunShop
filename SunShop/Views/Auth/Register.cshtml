@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="d-flex min-vh-100">
+    <form class="m-auto mt-5 form-login" action="/Auth/Register" method="post">
+        <h2 class="text-center">Đăng ký</h2>
+        <div class="mb-3">
+            <label for="input-fullName" class="form-label">Họ và tên:</label>
+            <input type="text" name="fullName" class="form-control w-100" required id="input-fullName" value="@ViewBag.FullName">
+        </div>
+        <div class="mb-3">
+            <label for="input-email" class="form-label">Email:</label>
+            <input type="email" name="email" class="form-control w-100" id="input-email" value="@ViewBag.Email">
+        </div>
+        <div class="mb-3">
+            <label for="input-password" class="form-label">Mật khẩu:</label>
+            <input type="password" name="password" class="form-control" id="input-password" value="@ViewBag.Password">
+        </div>
+        <div class="mb-3">
+            <label for="input-confirm-password" class="form-label">Nhập lại mật khẩu:</label>
+            <input type="password" name="confirm-password" class="form-control" id="input-confirm-password" value="@ViewBag.ConfirmPassword">
+        </div>
+        <div>
+            @if (@ViewBag.ErrMessage != null)
+            {
+                <span class="text-danger fs-6">@ViewBag.ErrMessage</span>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mt-5">Đăng ký</button>
+        <div class="mt-4">
+            <div class="text-center">Bạn đã có tài khoản? <a class="text-decoration-none" href="@Url.Action("Login", "Auth")">Đăng nhập</a></div>
+        </div>
+    </form>
+</div>
+
+

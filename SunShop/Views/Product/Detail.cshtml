@@ -1,0 +1,55 @@
+﻿@using SunShop.Models
+@using System.Globalization
+@{
+    @model Product
+    ViewBag.Title = "Detail";
+}
+
+<div class="main-detail-product container d-flex gap-5 mt-5 flex-column flex-md-row">
+    <div class="detail-img-container">
+        <img class="img-detai-product" src="~/Images/@Model.ImgUrl" alt="Alternate Text" />
+    </div>
+
+    <div class="detail-info">
+        <h2 class="detail-name">@Model.Name</h2>
+        <div class="d-flex align-items-center gap-1 ratting-container">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <span>(0)</span>
+        </div>
+        <div class="detail-product-price">
+            <span>@string.Format(CultureInfo.GetCultureInfo("de-DE"), "{0:N0}", Model.Price) đ</span>
+        </div>
+        <div class="quntity-buy-container mt-4">
+            <div>
+                <button class="btn-minus">
+                    -
+                </button>
+                <input class="input-quantity-buy text-center" type="text" name="quantity-buy" value="1" />
+                <button class="btn-plus">
+                    +
+                </button>
+            </div>
+            @if (Model.QuantityStock == 0)
+            {
+                <div class="mt-4 text-danger">
+                    <span>Hết hàng</span>
+                </div>
+            }
+            else
+            {
+                <div class="add-to-cart-container mt-5">
+                    <button class="btn-buy-now" data-id ="@Model.Id">Mua ngay</button>
+                    <button class="btn-add-to-cart-detail" data-id ="@Model.Id">Thêm vào giỏ hàng</button>
+                </div>
+            }
+        </div>
+        <div class="detail-procust-desc mt-4">
+            <p>@Model.Description</p>
+        </div>
+    </div>
+</div>
+

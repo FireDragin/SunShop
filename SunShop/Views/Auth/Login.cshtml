@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="d-flex min-vh-100">
+    <form class="m-auto mt-5 form-login" action="/Auth/Login" method="post">
+        <h2 class="text-center">Đăng nhập</h2>
+        <input type="hidden" name="ReturnUrl" value="@Request.QueryString["ReturnUrl"]" />
+        <div class="mb-3">
+            <label for="input-email" class="form-label">Email:</label>
+            <input type="email" name="email" class="form-control w-100" id="input-email" value="@ViewBag.Email">
+        </div>
+        <div class="mb-3">
+            <label for="input-password" class="form-label">Mật khẩu:</label>
+            <input type="password" name="password" class="form-control" id="input-password" value="@ViewBag.Password">
+        </div>
+        @if (@ViewBag.ErrMessage != null)
+        {
+            <span class="text-danger fs-6">@ViewBag.ErrMessage</span>
+        }
+        <button type="submit" class="btn btn-primary w-100 mt-5">Đăng nhập</button>
+        <div class="mt-4">
+            <div class="text-center">Bạn chưa có tài khoản? <a class="text-decoration-none" href="@Url.Action("Register", "Auth")">Đăng ký</a></div>
+        </div>
+    </form>
+</div>
+

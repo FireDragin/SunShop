@@ -1,0 +1,201 @@
+﻿@using SunShop.Models
+@using System.Globalization
+
+@{
+    @model List<Product>
+    ViewBag.Title = "Home Page";
+}
+
+<div class="home-banner d-none d-md-block">
+    <div class="container d-flex flex-column flex-md-row min-vh-100">
+        <div class="home-banner-left d-flex flex-column justify-content-center">
+            <div>
+                <div>
+                    <p class="fw-bold fs-1">Enjoy Our</p>
+                    <p class="fw-bold fs-1">Delicious Meal</p>
+                </div>
+                <P class="home-banner-slogen w-75">
+                    Khẩu hiệu tốt cho việc kinh doanh giao đồ ăn là chìa khóa để thu hút nhiều khách hàng hơn và kiếm được tiền, đặc biệt là đồ ăn.
+                </P>
+            </div>
+
+            <div class="d-flex gap-4">
+                <div>
+                    <button class="btn_check-now d-flex gap-2 align-items-center justify-content-between">
+                        XEM NGAY
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="d-flex align-items-center">
+                    <a href="/" class="btn_check-link">
+                        <span>
+                            <i class="fa-solid fa-play"></i>
+                        </span>
+                        <p>HƯỚNG DẪN ĐẶT HÀNG</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="home-banner-left">
+            <div class="imgs-container">
+                <img class="img-sale" src="~/Images/sale-label.png.png" alt="Sale" />
+                <img class="img-chicken" src="~/Images/home-banner-chicken.png" alt="Chicken" />
+                <img class="img-lemon" src="~/Images/lemon.png.png" alt="Lemon" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="menu-container d-flex align-items-center justify-content-start justify-content-md-center gap-4">
+    <div class="header-cate d-none d-md-block">
+        <h2>Menu</h2>
+        <span>DANH MỤC</span>
+    </div>
+    <div>
+        <ul class="cate-list d-flex justify-content-between align-items-center list-unstyled gap-3 px-2 px-md-0">
+            <li class="cate-list-item">
+                <a href="#">
+                    <img src="~/Images/fruit.png.png" alt="Alternate Text" />
+                    <div class="desc-cate">
+                        <h3>Bò</h3>
+                        <span>
+                            Thơm ngon, giàu đạm, mềm, bổ.
+                        </span>
+                    </div>
+                </a>
+            </li>
+            <li class="cate-list-item">
+                <a href="#">
+
+                    <img src="~/Images/vegetable.png.png" alt="Alternate Text" />
+                    <div class="desc-cate">
+                        <h3>Hamburger</h3>
+                        <span>Thịt bò, bánh mì, rau, sốt.</span>
+                    </div>
+                </a>
+            </li>
+            <li class="cate-list-item">
+                <a href="#">
+                    <img src="~/Images/drink.png.png" alt="Alternate Text" />
+                    <div class="desc-cate">
+                        <h3>Bánh ngọt</h3>
+                        <span>Ngọt, mềm, thơm, béo, hấp dẫn.</span>
+                    </div>
+                </a>
+            </li>
+            <li class="cate-list-item">
+                <a href="#">
+                    <img src="~/Images/Burger.png.png" alt="Alternate Text" />
+                    <div class="desc-cate">
+                        <h3>Gà</h3>
+                        <span>Giòn, thơm, đậm đà, mềm, ngon.</span>
+                    </div>
+                </a>
+            </li>
+            <li class="cate-list-item">
+                <a href="#">
+
+                    <img src="~/Images/salmon.png.png" alt="Alternate Text" />
+                    <div class="desc-cate">
+                        <h3>Mì ống, phô mai</h3>
+                        <span>Thơm, ngon, bổ dưỡng</span>
+                    </div>
+                </a>
+            </li>
+            <li class="cate-list-item">
+                <a href="#">
+                    <img src="~/Images/pizza.png" alt="Alternate Text" />
+                    <div class="desc-cate">
+                        <h3>Pizza</h3>
+                        <span>Phô mai, giòn, sốt, thịt, hấp dẫn.</span>
+                    </div>
+                </a>
+            </li>
+            <li class="cate-list-item">
+                <a href="#">
+                    <img src="~/Images/salmon.png(1).png" alt="Alternate Text" />
+                    <div class="desc-cate">
+                        <h3>Cá</h3>
+                        <span>Cá tươi sống mới bắt từ biển</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container px-lg-5">
+    <div class="w-100">
+        <img class="w-100 h-100" src="~/Images/img-info.png" alt="" />
+    </div>
+    <div class="list-product d-flex flex-column">
+        <div class="product-header d-flex justify-content-between">
+            <h3 class="text-uppercase">Best Selling</h3>
+            <div class="d-flex gap-3">
+                <button class="btn-prev"><i class="fa-solid fa-angle-left"></i></button>
+                <button class="btn-next"><i class="fa-solid fa-angle-right"></i></button>
+            </div>
+        </div>
+        <div class="main-product mt-3">
+            <div class="row g-5">
+                @foreach (Product product in Model)
+                {
+                    <div class="col-md-3 col-sm-12">
+                        <div class="card position-relative">
+                            <a href="/Product/Detail/@product.Id" class="d-block w-100">
+                                <img src="~/Images/@product.ImgUrl" class="card-img-top img-product" alt="...">
+                            </a>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center gap-1 ratting-container">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>(0)</span>
+                                </div>
+                                <h5 class="card-title mb-4">@product.Name</h5>
+                                <div class="d-flex gap-3 justify-content-between align-items-center">
+                                    <span class="card-price">@string.Format(CultureInfo.GetCultureInfo("de-DE"), "{0:N0}", product.Price) đ</span>
+                                    <button href="/" class="btn btn-primary btn-add-to-cart" data-id ="@product.Id">
+                                        <i class="fa-solid fa-bag-shopping"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button class="position-absolute btn-add-wish">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="customer-review mt-5 d-none d-lg-block">
+    <div class="container h-100">
+        <div class="d-flex float-end h-100 w-50 flex-column align-items-center justify-content-center">
+            <div class="review-heading d-flex flex-column align-items-center">
+                <span class="text-center">Đánh giá</span>
+                <h3>Khách hàng nói về của hàng chúng tôi</h3>
+            </div>
+            <div class="review-content">
+                <p>Đồ ăn rất ngon, giao hàng nhanh, nhân viên thân thiện, sau này sẽ đặt đồ ăn ở shop tiếp.</p>
+            </div>
+            <div class="d-flex align-items-center gap-1 ratting-container">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <div class="customer d-flex gap-2 align-items-center">
+                <img src="~/Images/chubinngo.jpg" alt="Alternate Text" />
+                <span>Chubin Ngô</span>
+            </div>
+        </div>
+    </div>
+</div>
