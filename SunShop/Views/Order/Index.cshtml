@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="d-flex vh-100">
+    <form action="/Order/Create" method="post" class="w-50 mx-auto form-info-contact">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Tên</label>
+            <input type="text" class="form-control" name="name" id="exampleInputEmail1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Số điện thoại</label>
+            <input type="text" class="form-control" name="phone-number" id="exampleInputEmail1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Địa chỉ</label>
+            <input type="text" class="form-control" name="address" id="exampleInputEmail1">
+        </div>
+       
+        <button type="submit" class="btn btn-primary w-100">Xác nhận</button>
+    </form>
+</div>
+

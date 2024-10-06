@@ -55,6 +55,12 @@ namespace SunShop.Controllers
             Response.Cookies.Add(fullNameCookie);
            
             string prevUrl = formCollection["ReturnUrl"];
+
+            if(userLogin.Role.RoleName == "ADMIN")
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+
             if(!string.IsNullOrEmpty(prevUrl))
             {
                 return Redirect(prevUrl);

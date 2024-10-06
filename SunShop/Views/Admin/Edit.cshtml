@@ -5,78 +5,70 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container">
-    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new
-    {
-        enctype = "multipart/form-data"
-    }))
+<div class="container form-input-container">
+    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <hr />
+        <div class="form-horizontal bg-white rounded-1 p-4">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
 
-            <div class="form-group">
-                Tên sản phẩm
-                <div class="col-md-10">
+            <div class="form-group mb-3">
+                <div class="col">
+                    <p>Tên sản phẩm</p>
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                Mô tả
-                <div class="col-md-10">
+            <div class="form-group mb-3">
+                <p>Mô tả</p>
+                <div class="col">
                     @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                Giá
-                <div class="col-md-10">
+            <div class="form-group mb-3">
+                <p>Giá</p>
+                <div class="col">
                     @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                Ảnh minh họa
-                <div class="col-md-10">
+            <div class="form-group mb-3">
+                <p>Ảnh</p>
+                <div class="col">
                     <input title="Upload a product image" type="file" name="Picture" />
                     @Html.ValidationMessageFor(model => model.ImgUrl, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                Loại sản phẩm
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CategoriesId, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-group mb-3">
+                <p>Loại sản phẩm</p>
+                <div class="col">
+                    @Html.DropDownListFor(model => model.CategoriesId, new SelectList(ViewBag.Categories, "Id", "Name"), "Chọn loại sản phẩm", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.CategoriesId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                Hàng tồn kho
-                <div class="col-md-10">
+            <div class="form-group mb-3">
+                <p>Số lượng tồn kho</p>
+                <div class="col">
                     @Html.EditorFor(model => model.QuantityStock, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.QuantityStock, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-
-
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <button type="submit" class="btn btn-info px-5 text-white">
+                        Cập nhật
+                    </button>
                 </div>
             </div>
         </div>
     }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
 </div>

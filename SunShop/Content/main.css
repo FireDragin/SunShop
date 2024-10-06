@@ -680,6 +680,16 @@
     color: #F3274C;
 }
 
+/*Order*/
+.form-info-contact {
+    display: block;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    box-shadow: 0 0 4px #a0a0a0;
+    border-radius: 4px;
+    height: fit-content;
+}
 /*Admin*/
 /*Side bar*/
 .side-bar-container {
@@ -699,6 +709,7 @@
 .list-item-sidebar-link.selected-item {
     background: rgba(0, 176, 116, 0.15);
     color: #00B074;
+    font-weight: bold;
 }
 
 .list-item-sidebar-link {
@@ -714,6 +725,8 @@
 
 .list-item-sidebar-link:hover {
     color: #00B074;
+    font-weight: bold;
+
 }
 
 .header-admin {
@@ -729,14 +742,14 @@
 }
 
 .left-container {
-    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 .right-container {
     background: #F3F2F7;
-    height: 100vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 .search-admin-container {
@@ -827,4 +840,14 @@
 
 .btn-mana-delete:hover {
     color: #F3274C;
+}
+
+.form-input-container {
+    max-height: 80vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.dashboard-container {
+    height: 80vh;
 }

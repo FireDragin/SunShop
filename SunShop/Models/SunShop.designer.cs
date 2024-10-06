@@ -48,6 +48,9 @@ namespace SunShop.Models
     partial void InsertRole(Role instance);
     partial void UpdateRole(Role instance);
     partial void DeleteRole(Role instance);
+    partial void InsertShipping(Shipping instance);
+    partial void UpdateShipping(Shipping instance);
+    partial void DeleteShipping(Shipping instance);
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
@@ -122,6 +125,14 @@ namespace SunShop.Models
 			get
 			{
 				return this.GetTable<Role>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Shipping> Shippings
+		{
+			get
+			{
+				return this.GetTable<Shipping>();
 			}
 		}
 		
@@ -866,13 +877,15 @@ namespace SunShop.Models
 		
 		private string _PaymentStatus;
 		
-		private string _ShippingAddess;
-		
 		private System.Nullable<System.DateTime> _CreatedAt;
 		
 		private System.Nullable<System.DateTime> _UpdatedAt;
 		
+		private System.Nullable<int> _ShippingId;
+		
 		private EntitySet<OrderDetail> _OrderDetails;
+		
+		private EntityRef<Shipping> _Shipping;
 		
 		private EntityRef<User> _User;
 		
@@ -892,17 +905,18 @@ namespace SunShop.Models
     partial void OnPaymentMethodChanged();
     partial void OnPaymentStatusChanging(string value);
     partial void OnPaymentStatusChanged();
-    partial void OnShippingAddessChanging(string value);
-    partial void OnShippingAddessChanged();
     partial void OnCreatedAtChanging(System.Nullable<System.DateTime> value);
     partial void OnCreatedAtChanged();
     partial void OnUpdatedAtChanging(System.Nullable<System.DateTime> value);
     partial void OnUpdatedAtChanged();
+    partial void OnShippingIdChanging(System.Nullable<int> value);
+    partial void OnShippingIdChanged();
     #endregion
 		
 		public Order()
 		{
 			this._OrderDetails = new EntitySet<OrderDetail>(new Action<OrderDetail>(this.attach_OrderDetails), new Action<OrderDetail>(this.detach_OrderDetails));
+			this._Shipping = default(EntityRef<Shipping>);
 			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
@@ -1031,26 +1045,6 @@ namespace SunShop.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShippingAddess", DbType="VarChar(MAX)")]
-		public string ShippingAddess
-		{
-			get
-			{
-				return this._ShippingAddess;
-			}
-			set
-			{
-				if ((this._ShippingAddess != value))
-				{
-					this.OnShippingAddessChanging(value);
-					this.SendPropertyChanging();
-					this._ShippingAddess = value;
-					this.SendPropertyChanged("ShippingAddess");
-					this.OnShippingAddessChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedAt", DbType="DateTime")]
 		public System.Nullable<System.DateTime> CreatedAt
 		{
@@ -1091,6 +1085,30 @@ namespace SunShop.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShippingId", DbType="Int")]
+		public System.Nullable<int> ShippingId
+		{
+			get
+			{
+				return this._ShippingId;
+			}
+			set
+			{
+				if ((this._ShippingId != value))
+				{
+					if (this._Shipping.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnShippingIdChanging(value);
+					this.SendPropertyChanging();
+					this._ShippingId = value;
+					this.SendPropertyChanged("ShippingId");
+					this.OnShippingIdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_OrderDetail", Storage="_OrderDetails", ThisKey="Id", OtherKey="OrderId")]
 		public EntitySet<OrderDetail> OrderDetails
 		{
@@ -1101,6 +1119,40 @@ namespace SunShop.Models
 			set
 			{
 				this._OrderDetails.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Shipping_Order", Storage="_Shipping", ThisKey="ShippingId", OtherKey="Id", IsForeignKey=true)]
+		public Shipping Shipping
+		{
+			get
+			{
+				return this._Shipping.Entity;
+			}
+			set
+			{
+				Shipping previousValue = this._Shipping.Entity;
+				if (((previousValue != value) 
+							|| (this._Shipping.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Shipping.Entity = null;
+						previousValue.Orders.Remove(this);
+					}
+					this._Shipping.Entity = value;
+					if ((value != null))
+					{
+						value.Orders.Add(this);
+						this._ShippingId = value.Id;
+					}
+					else
+					{
+						this._ShippingId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Shipping");
+				}
 			}
 		}
 		
@@ -1189,11 +1241,11 @@ namespace SunShop.Models
 		
 		private System.Nullable<int> _CategoriesId;
 		
-		private System.Nullable<int> _QuantityStock;
-		
 		private System.Nullable<System.DateTime> _CreatedAt;
 		
 		private System.Nullable<System.DateTime> _UpdatedAt;
+		
+		private System.Nullable<int> _QuantityStock;
 		
 		private EntitySet<Cart> _Carts;
 		
@@ -1217,12 +1269,12 @@ namespace SunShop.Models
     partial void OnImgUrlChanged();
     partial void OnCategoriesIdChanging(System.Nullable<int> value);
     partial void OnCategoriesIdChanged();
-    partial void OnQuantityStockChanging(System.Nullable<int> value);
-    partial void OnQuantityStockChanged();
     partial void OnCreatedAtChanging(System.Nullable<System.DateTime> value);
     partial void OnCreatedAtChanged();
     partial void OnUpdatedAtChanging(System.Nullable<System.DateTime> value);
     partial void OnUpdatedAtChanged();
+    partial void OnQuantityStockChanging(System.Nullable<int> value);
+    partial void OnQuantityStockChanged();
     #endregion
 		
 		public Product()
@@ -1357,26 +1409,6 @@ namespace SunShop.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuantityStock", DbType="Int")]
-		public System.Nullable<int> QuantityStock
-		{
-			get
-			{
-				return this._QuantityStock;
-			}
-			set
-			{
-				if ((this._QuantityStock != value))
-				{
-					this.OnQuantityStockChanging(value);
-					this.SendPropertyChanging();
-					this._QuantityStock = value;
-					this.SendPropertyChanged("QuantityStock");
-					this.OnQuantityStockChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedAt", DbType="DateTime")]
 		public System.Nullable<System.DateTime> CreatedAt
 		{
@@ -1413,6 +1445,26 @@ namespace SunShop.Models
 					this._UpdatedAt = value;
 					this.SendPropertyChanged("UpdatedAt");
 					this.OnUpdatedAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuantityStock", DbType="Int")]
+		public System.Nullable<int> QuantityStock
+		{
+			get
+			{
+				return this._QuantityStock;
+			}
+			set
+			{
+				if ((this._QuantityStock != value))
+				{
+					this.OnQuantityStockChanging(value);
+					this.SendPropertyChanging();
+					this._QuantityStock = value;
+					this.SendPropertyChanged("QuantityStock");
+					this.OnQuantityStockChanged();
 				}
 			}
 		}
@@ -1684,6 +1736,216 @@ namespace SunShop.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Shipping")]
+	public partial class Shipping : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private string _PhoneNumber;
+		
+		private string _Address;
+		
+		private System.Nullable<System.DateTime> _CreatedAt;
+		
+		private System.Nullable<System.DateTime> _UpdatedAt;
+		
+		private EntitySet<Order> _Orders;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnPhoneNumberChanging(string value);
+    partial void OnPhoneNumberChanged();
+    partial void OnAddressChanging(string value);
+    partial void OnAddressChanged();
+    partial void OnCreatedAtChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreatedAtChanged();
+    partial void OnUpdatedAtChanging(System.Nullable<System.DateTime> value);
+    partial void OnUpdatedAtChanged();
+    #endregion
+		
+		public Shipping()
+		{
+			this._Orders = new EntitySet<Order>(new Action<Order>(this.attach_Orders), new Action<Order>(this.detach_Orders));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumber", DbType="VarChar(100)")]
+		public string PhoneNumber
+		{
+			get
+			{
+				return this._PhoneNumber;
+			}
+			set
+			{
+				if ((this._PhoneNumber != value))
+				{
+					this.OnPhoneNumberChanging(value);
+					this.SendPropertyChanging();
+					this._PhoneNumber = value;
+					this.SendPropertyChanged("PhoneNumber");
+					this.OnPhoneNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NVarChar(100)")]
+		public string Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedAt", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedAt
+		{
+			get
+			{
+				return this._CreatedAt;
+			}
+			set
+			{
+				if ((this._CreatedAt != value))
+				{
+					this.OnCreatedAtChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedAt = value;
+					this.SendPropertyChanged("CreatedAt");
+					this.OnCreatedAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedAt", DbType="DateTime")]
+		public System.Nullable<System.DateTime> UpdatedAt
+		{
+			get
+			{
+				return this._UpdatedAt;
+			}
+			set
+			{
+				if ((this._UpdatedAt != value))
+				{
+					this.OnUpdatedAtChanging(value);
+					this.SendPropertyChanging();
+					this._UpdatedAt = value;
+					this.SendPropertyChanged("UpdatedAt");
+					this.OnUpdatedAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Shipping_Order", Storage="_Orders", ThisKey="Id", OtherKey="ShippingId")]
+		public EntitySet<Order> Orders
+		{
+			get
+			{
+				return this._Orders;
+			}
+			set
+			{
+				this._Orders.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Orders(Order entity)
+		{
+			this.SendPropertyChanging();
+			entity.Shipping = this;
+		}
+		
+		private void detach_Orders(Order entity)
+		{
+			this.SendPropertyChanging();
+			entity.Shipping = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
 	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1698,8 +1960,6 @@ namespace SunShop.Models
 		
 		private string _Password;
 		
-		private string _avatar;
-		
 		private string _PhoneNumber;
 		
 		private string _Address;
@@ -1713,6 +1973,8 @@ namespace SunShop.Models
 		private System.Nullable<System.DateTime> _CreatedAt;
 		
 		private System.Nullable<System.DateTime> _UpdatedAt;
+		
+		private string _avatar;
 		
 		private EntitySet<Cart> _Carts;
 		
@@ -1732,8 +1994,6 @@ namespace SunShop.Models
     partial void OnEmailChanged();
     partial void OnPasswordChanging(string value);
     partial void OnPasswordChanged();
-    partial void OnavatarChanging(string value);
-    partial void OnavatarChanged();
     partial void OnPhoneNumberChanging(string value);
     partial void OnPhoneNumberChanged();
     partial void OnAddressChanging(string value);
@@ -1748,6 +2008,8 @@ namespace SunShop.Models
     partial void OnCreatedAtChanged();
     partial void OnUpdatedAtChanging(System.Nullable<System.DateTime> value);
     partial void OnUpdatedAtChanged();
+    partial void OnavatarChanging(string value);
+    partial void OnavatarChanged();
     #endregion
 		
 		public User()
@@ -1834,26 +2096,6 @@ namespace SunShop.Models
 					this._Password = value;
 					this.SendPropertyChanged("Password");
 					this.OnPasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_avatar", DbType="VarChar(1000)")]
-		public string avatar
-		{
-			get
-			{
-				return this._avatar;
-			}
-			set
-			{
-				if ((this._avatar != value))
-				{
-					this.OnavatarChanging(value);
-					this.SendPropertyChanging();
-					this._avatar = value;
-					this.SendPropertyChanged("avatar");
-					this.OnavatarChanged();
 				}
 			}
 		}
@@ -1998,6 +2240,26 @@ namespace SunShop.Models
 					this._UpdatedAt = value;
 					this.SendPropertyChanged("UpdatedAt");
 					this.OnUpdatedAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_avatar", DbType="VarChar(1000)")]
+		public string avatar
+		{
+			get
+			{
+				return this._avatar;
+			}
+			set
+			{
+				if ((this._avatar != value))
+				{
+					this.OnavatarChanging(value);
+					this.SendPropertyChanging();
+					this._avatar = value;
+					this.SendPropertyChanged("avatar");
+					this.OnavatarChanged();
 				}
 			}
 		}

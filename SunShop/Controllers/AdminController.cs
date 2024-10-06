@@ -62,10 +62,13 @@ namespace SunShop.Controllers
         }
         public ActionResult Edit(int id)
         {
+            ViewBag.ProductSelected = true;
+
             Product p = context.Products.FirstOrDefault(x => x.Id == id);
             if (Request.Form.Count == 0)
             {
-
+                List<Category> categories = context.Categories.ToList();
+                ViewBag.Categories = categories;
                 return View(p);
             }
 
@@ -73,7 +76,9 @@ namespace SunShop.Controllers
             p.Description = Request.Form["description"];
             p.Price = int.Parse(Request.Form["Price"]);
             p.QuantityStock = int.Parse(Request.Form["QuantityStock"]);
-            p.CategoriesId = int.Parse(Request.Form["CategoriesID"]);
+
+            Category category = context.Categories.SingleOrDefault(c => c.Id == int.Parse(Request.Form["CategoriesID"]));
+            p.Category = category;
             p.UpdatedAt = DateTime.Now;
             HttpPostedFileBase file = Request.Files["Picture"];
             if (file != null && file.FileName != "")
@@ -83,13 +88,15 @@ namespace SunShop.Controllers
                 file.SaveAs(filePath);
                 p.ImgUrl = file.FileName;
             }
-
+            
             context.SubmitChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ManageProducts", "Admin");
 
         }
         public ActionResult Delete(int id)
         {
+            ViewBag.ProductSelected = true;
+
             Product p = context.Products.FirstOrDefault(x => x.Id == id);
             if (p != null)
             {
@@ -97,7 +104,7 @@ namespace SunShop.Controllers
                 context.SubmitChanges();
 
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ManageProducts", "Admin");
 
         }
         public ActionResult ManageCategories()
@@ -108,6 +115,8 @@ namespace SunShop.Controllers
         }
         public ActionResult CreateCategory()
         {
+            ViewBag.CategorySelected = true;
+
             if (Request.Form.Count > 0)
             {
 
@@ -118,13 +127,15 @@ namespace SunShop.Controllers
                 c.UpdatedAt = DateTime.Now;
                 context.Categories.InsertOnSubmit(c);
                 context.SubmitChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ManageCategories", "Admin");
             }
             return View();
 
         }
         public ActionResult EditCategory(int id)
         {
+            ViewBag.CategorySelected = true;
+
             Category c = context.Categories.FirstOrDefault(x => x.Id == id);
             if (Request.Form.Count == 0)
             {
@@ -135,10 +146,12 @@ namespace SunShop.Controllers
             c.CreatedAt = DateTime.Now;
             c.UpdatedAt = DateTime.Now;
             context.SubmitChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ManageCategories", "Admin");
         }
         public ActionResult DeleteCategory(int id)
         {
+            ViewBag.CategorySelected = true;
+
             Category c = context.Categories.FirstOrDefault(x => x.Id == id);
             if (c != null)
             {
@@ -146,7 +159,7 @@ namespace SunShop.Controllers
                 context.SubmitChanges();
 
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ManageCategories", "Admin");
 
         }
     }

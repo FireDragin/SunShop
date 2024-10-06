@@ -42,7 +42,9 @@
             else
             {
                 <div class="add-to-cart-container mt-5">
-                    <button class="btn-buy-now" data-id ="@Model.Id">Mua ngay</button>
+                    <form action="/Order" method="get">
+                        <button type="submit" value="@Model.Id" name="product-id" class="btn-buy-now" data-id="@Model.Id">Mua ngay</button>
+                    </form>
                     <button class="btn-add-to-cart-detail" data-id ="@Model.Id">Thêm vào giỏ hàng</button>
                 </div>
             }

@@ -84,9 +84,9 @@
             <div>
                 <span class="fs-5 total-amount">Tổng tiền: @(string.Format(CultureInfo.GetCultureInfo("de-DE"), "{0:N0}", totalAmount))đ</span>
             </div>
-            <div>
-                <button class="cart-checkout">THANH TOÁN</button>
-            </div>
+            <form action="/Order" method="get">
+                <button type="submit" class="cart-checkout">ĐẶT HÀNG</button>
+            </form>
         </div>
     </div>
 

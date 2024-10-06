@@ -6,5 +6,21 @@
 }
 
 <div class="container">
-    admin dashboard
+    <div class="dashboard-container bg-white rounded-1 d-flex">
+        @{ 
+            HttpCookie fullNameCookie = Request.Cookies["FullNameCookie"];
+            string fullName = null;
+            if (fullNameCookie != null)
+            {
+                fullName = HttpUtility.UrlDecode(fullNameCookie.Value);
+            }
+        }
+
+        <div class="fs-1 m-auto">
+            <span>
+                Chào mừng @fullName đến với
+            </span>
+            <span>Admindashboard</span>
+        </div>
+    </div>
 </div>

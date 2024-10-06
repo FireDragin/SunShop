@@ -41,10 +41,11 @@
       <Column Name="OrderStatus" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="PaymentMethod" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="PaymentStatus" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="ShippingAddess" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="CreatedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="UpdatedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ShippingId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Order_OrderDetail" Member="OrderDetails" ThisKey="Id" OtherKey="OrderId" Type="OrderDetail" />
+      <Association Name="Shipping_Order" Member="Shipping" ThisKey="ShippingId" OtherKey="Id" Type="Shipping" IsForeignKey="true" />
       <Association Name="User_Order" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
@@ -56,9 +57,9 @@
       <Column Name="Price" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ImgUrl" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="CategoriesId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="QuantityStock" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="CreatedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="UpdatedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="QuantityStock" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Product_Cart" Member="Carts" ThisKey="Id" OtherKey="ProductId" Type="Cart" />
       <Association Name="Product_OrderDetail" Member="OrderDetails" ThisKey="Id" OtherKey="ProductId" Type="OrderDetail" />
       <Association Name="Category_Product" Member="Category" ThisKey="CategoriesId" OtherKey="Id" Type="Category" IsForeignKey="true" />
@@ -73,13 +74,23 @@
       <Association Name="Role_User" Member="Users" ThisKey="Id" OtherKey="RoleId" Type="User" />
     </Type>
   </Table>
+  <Table Name="dbo.Shipping" Member="Shippings">
+    <Type Name="Shipping">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CreatedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Shipping_Order" Member="Orders" ThisKey="Id" OtherKey="ShippingId" Type="Order" />
+    </Type>
+  </Table>
   <Table Name="dbo.Users" Member="Users">
     <Type Name="User">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Fullname" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Password" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="avatar" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
       <Column Name="PhoneNumber" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Column Name="Address" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="DateOfBirth" Type="System.DateTime" DbType="Date" CanBeNull="true" />
@@ -87,6 +98,7 @@
       <Column Name="RoleId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="CreatedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="UpdatedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="avatar" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
       <Association Name="User_Cart" Member="Carts" ThisKey="Id" OtherKey="UsersId" Type="Cart" />
       <Association Name="User_Order" Member="Orders" ThisKey="Id" OtherKey="UserId" Type="Order" />
       <Association Name="Role_User" Member="Role" ThisKey="RoleId" OtherKey="Id" Type="Role" IsForeignKey="true" />
