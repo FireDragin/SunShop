@@ -99,7 +99,7 @@ namespace SunShop.Controllers
                     UpdatedAt = DateTime.Now,
                 };
 
-                user.Carts.Clear();
+                context.Carts.DeleteAllOnSubmit(user.Carts);
                 
             }
 

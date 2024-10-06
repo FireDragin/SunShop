@@ -1,4 +1,5 @@
-﻿using SunShop.Helper;
+﻿using Microsoft.Ajax.Utilities;
+using SunShop.Helper;
 using SunShop.Models;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace SunShop.Controllers
         {
             string email = HttpContext.User.Identity.Name;
             User user = context.Users.FirstOrDefault(u => u.Email == email);
-            user.Carts.Clear();
+            context.Carts.DeleteAllOnSubmit(user.Carts);
             
             context.SubmitChanges();
 
